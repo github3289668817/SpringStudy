@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- id:唯一标识   class:全类名，默认通过无参构造创建对象，保证bean内有无参构造
+    scope：指对象的作用范围：
+        1.singleton：默认值，单例，当spring核心文件被加载时，实例化配置的Bean实例
+            Bean生命周期：
+                1.对象创建：当应用加载，创建容器时，对象就被创建了
+                2.对象运行：只要容器早，对象一直活着
+                3.对象销毁：当应用卸载，销毁容器时，对象就被销毁了
+        2.prototype：多例的，实例对象有多个，当调用getBean方法时实例化Bean
+            Bean生命周期：
+                1.对象创建：当使用对象时，创建新的对象实例化
+                2.对象运行：只要对象在使用中，就一直活着
+                3.对象销毁：当对象长时间不用时，被Java的垃圾回收器回收了
+        3.request：web项目中，Spring创建一个Bean的对象，将对象存入到Request域中
+        4.session：web项目中，Spring创建一个Bean的对象，将对象存入到Session域中
+        5.global session：web项目中，用用在Portlet环境，如果没有Portlet环境那么globalSession相当于session
+-->
+<!--    无参构造方法实例化-->
+    <!--<bean   id="userDao"
+            class="per.xgt.dao.impl.UserDaoImpl"
+            scope="singleton"
+            init-method="init"
+            destroy-method="destory">
+        <property name="username" value="Valen熊"/>
+        <property name="age" value="18"/>
+    </bean>-->
+    <bean id="userDao" class="per.xgt.dao.impl.UserDaoImpl">
+        <property name="strList">
+            <list>
+                <value>哈哈哈</value>
+                <value>哦哦哦</value>
+                <value>呵呵呵</value>
+            </list>
+        </property>
+        <property name="userMap">
+            <map>
+                <entry key="user1" value-ref="user1"></entry>
+                <entry key="user2" value-ref="user2"></entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="Driver">driver</prop>
+                <prop key="Manager">manager</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="user1" class="per.xgt.domain.User">
+        <property name="name" value="Tom2" />
+        <property name="addr" value="Jery2" />
+    </bean>
+    <bean id="user2" class="per.xgt.domain.User">
+        <property name="name" value="Tom1" />
+        <property name="addr" value="Jery1" />
+    </bean>
+
+<!--    静态工厂方法实例化-->
+    <!--<bean id="userDao" class="per.xgt.factory.StaticFactory" factory-method="getUserDao">
+    </bean>-->
+<!--    工厂实例方法实例化-->
+    <!--<bean id="factory" class="per.xgt.factory.DynamicFactory"></bean>
+    <bean id="userDao" factory-bean="factory" factory-method="getUserDao"></bean>-->
+
+    <!--<bean id="userService" class="per.xgt.service.Impl.UserServiceImpl">
+        <property name="UserDao" ref="userDao"></property>
+    </bean>-->
+    <!--<bean id="userService" class="per.xgt.service.Impl.UserServiceImpl" p:userDao-ref="userDao" />-->
+    <bean id="userService" class="per.xgt.service.Impl.UserServiceImpl">
+        <constructor-arg name="userDao" ref="userDao"></constructor-arg>
+    </bean>
+
+    <import resource="applicationContext-user.xml" />
+    <import resource="applicationContext-product.xml" />
+
+</beans>
