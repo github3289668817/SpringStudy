@@ -6,7 +6,6 @@
                "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
     <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver" ></property>
         <property name="jdbcUrl" value="jdbc:mysql://121.5.179.160:3306/test" ></property>
@@ -14,18 +13,21 @@
         <property name="password" value="root" ></property>
     </bean>-->
 
-    <context:property-placeholder location="classpath:jdbc.properties" />
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="${jdbc.driver}" ></property>
-        <property name="jdbcUrl" value="${jdbc.url}" ></property>
-        <property name="user" value="${jdbc.username}" ></property>
-        <property name="password" value="${jdbc.password}" ></property>
-    </bean>
+<!--    <context:property-placeholder location="classpath:jdbc.properties" />-->
+<!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+<!--        <property name="driverClass" value="${jdbc.driver}" ></property>-->
+<!--        <property name="jdbcUrl" value="${jdbc.url}" ></property>-->
+<!--        <property name="user" value="${jdbc.username}" ></property>-->
+<!--        <property name="password" value="${jdbc.password}" ></property>-->
+<!--    </bean>-->
 
-    <bean id="userDao" class="per.xgt.dao.impl.UserDaoImpl"></bean>
+<!--    <bean id="userDao" class="per.xgt.dao.impl.UserDaoImpl"></bean>-->
 
-    <bean id="userService" class="per.xgt.service.impl.UserServiceImpl">
-        <property name="userDao" ref="userDao" />
-    </bean>
+<!--    <bean id="userService" class="per.xgt.service.impl.UserServiceImpl">-->
+<!--        <property name="userDao" ref="userDao" />-->
+<!--    </bean>-->
+
+    <!--    配置组件扫描，作用是指定哪个包及其子包下的bean需要进行扫描以便识别使用注解配置的类、字段和方法-->
+<!--    <context:component-scan base-package="per.xgt" />-->
 
 </beans>

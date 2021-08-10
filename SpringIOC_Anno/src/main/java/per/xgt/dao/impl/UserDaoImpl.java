@@ -1,6 +1,6 @@
 package per.xgt.dao.impl;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import per.xgt.dao.UserDao;
 
 /**
@@ -8,7 +8,8 @@ import per.xgt.dao.UserDao;
  * @version V1.0
  * @date 2021/8/5 17:09
  */
-@Component
+//@Component("userDao")
+@Repository("userDao")
 public class UserDaoImpl implements UserDao {
     @Override
     public void save() {
