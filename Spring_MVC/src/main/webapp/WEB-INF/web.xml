@@ -4,13 +4,24 @@
 
 <web-app>
   
+<!--  全局初始化参数-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>applicationContext.xml</param-value>
+  </context-param>
+
+<!--  配置监听器-->
+  <listener>
+    <listener-class>per.xgt.listener.ContextLoaderListener</listener-class>
+  </listener>
+  
   <servlet>
     <servlet-name>UserServlet</servlet-name>
     <servlet-class>per.xgt.controller.UserServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
-    <url-pattern>userServlet</url-pattern>
+    <url-pattern>/userServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>
