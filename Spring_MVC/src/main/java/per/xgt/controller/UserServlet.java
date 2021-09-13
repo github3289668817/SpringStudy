@@ -1,6 +1,7 @@
 package per.xgt.controller;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import per.xgt.service.UserService;
 
 import javax.servlet.ServletContext;
@@ -20,8 +21,10 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //ApplicationContext app = new ClassPathXmlApplicationContext("applicationContext.xml");
-        ServletContext servletContext = req.getServletContext();
-        ApplicationContext app = (ApplicationContext) servletContext.getAttribute("app");
+        ServletContext servletContext = this.getServletContext();
+        //ApplicationContext app = (ApplicationContext) servletContext.getAttribute("app");
+        //ApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+        ApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(servletContext);
         UserService userService = app.getBean(UserService.class);
         userService.save();
     }

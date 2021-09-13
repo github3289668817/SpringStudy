@@ -12,7 +12,7 @@ import javax.servlet.ServletContext;
 public class WebApplicationContextUtils {
 
     public static ApplicationContext getWebApplicationContext(ServletContext servletContext){
-        return null;
+        return (ApplicationContext) servletContext.getAttribute("app");
     }
 
 }
