@@ -1,7 +1,17 @@
 package per.xgt.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import per.xgt.domain.User;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author Valen
@@ -47,9 +57,85 @@ public class User4Controller {
      * method：用于指定请求的方式
      * params：用于指定限制请求参数的条件。它支持简单的表达式，要求请求参数的key和value必须和配置的一模一样
      */
-    public String save(){
+    public String save() {
         System.out.println("Controller Save Running...");
         //加上/表示从根目录找资源，如果不加就会从当前资源目录下找资源
         return "success";
     }
+
+    /**
+     * Model：模型，封装数据
+     * View：视图，展示数据
+     *
+     * @return
+     */
+    @RequestMapping("/quick2")
+    public ModelAndView save2() {
+        ModelAndView modelAndView = new ModelAndView();
+        //设置模型数据
+        modelAndView.addObject("username", "xgt1");
+        //设置视图名称
+        modelAndView.setViewName("success");
+        return modelAndView;
+    }
+
+    @RequestMapping("/quick3")
+    public ModelAndView save3(ModelAndView modelAndView) {
+        //ModelAndView modelAndView = new ModelAndView();
+        //设置模型数据
+        modelAndView.addObject("username", "xgt2");
+        //设置视图名称
+        modelAndView.setViewName("success");
+        return modelAndView;
+    }
+
+    @RequestMapping("/quick4")
+    public String save4(Model model) {
+        //设置模型数据
+        model.addAttribute("username", "xgt3");
+        return "success";
+    }
+
+    @RequestMapping("/quick5")
+    public String save5(HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("username", "xgt4");
+        return "success";
+    }
+
+    @RequestMapping("/quick6")
+    public void save6(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.getWriter().print("xgt5");
+    }
+
+    @RequestMapping("/quick7")
+    /**
+     * 告知SpringMVC 返回的数据不进行页面跳转，而是数据
+     */
+    @ResponseBody
+    public String save7() {
+        return "xgt6";
+    }
+
+    @RequestMapping("/quick8")
+    @ResponseBody
+    public String save8() throws JsonProcessingException {
+        User user = new User();
+        user.setUsername("xgt7");
+        user.setAge(25);
+        //使用json转换工具将对象转换成json格式的字符串(jackson)
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(user);
+        return json;
+    }
+
+    @RequestMapping("/quick9")
+    @ResponseBody
+    //springmvc自动将User转换成json格式的字符串
+    public User save9() {
+        User user = new User();
+        user.setUsername("xgt8");
+        user.setAge(25);
+        return user;
+    }
+
 }
