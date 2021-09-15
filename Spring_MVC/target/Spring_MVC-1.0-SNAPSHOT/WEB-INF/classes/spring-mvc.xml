@@ -39,4 +39,9 @@
 -->
     <mvc:annotation-driven />
 
+<!--    在SpringMVC框架中   开放资源的访问-->
+<!--    <mvc:resources mapping="/js/**" location="/js/" />-->
+<!--    <mvc:resources mapping="/img/**" location="/img/" />-->
+    <mvc:default-servlet-handler />
+
 </beans>

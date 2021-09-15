@@ -1,12 +1,14 @@
 package per.xgt.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import per.xgt.domain.User;
 import per.xgt.domain.VO;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -60,6 +62,19 @@ public class User2Controller {
     @ResponseBody
     public void user4(VO vo) {
         System.out.println(vo);
+        System.out.println("哈哈哈哈");
+    }
+
+    /**
+     * 获得集合数据类型参数
+     * 当使用ajax提交时，可以指定ContentType为json形式，那么在方法参数位置使用@RequestBody可以直接接受集合数据而无需使用POJO进行包装
+     * @param userList
+     */
+    @RequestMapping("/user5")
+    @ResponseBody
+    public void user5(@RequestBody List<User> userList) {
+        System.out.println(userList);
+        System.out.println("哈哈哈哈");
     }
 
 }
