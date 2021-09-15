@@ -24,4 +24,19 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
+<!--    配置处理器映射器-->
+<!--    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+<!--        <property name="messageConverters">-->
+<!--            <list>-->
+<!--                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>-->
+<!--            </list>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+<!--    使用此配置自动加载处理映射器(RequestMappingHandlerMapping)、处理适配器(RequestMappingHandlerAdapter)
+        可用在Spring-xml.xml配置文件中使用<mvc:annotation-driven />代替注解处理器和适配器的配置
+        同时<mvc:annotation-driven />默认底层就会集成jackson进行对象或集合的json格式字符串的转换
+-->
+    <mvc:annotation-driven />
+
 </beans>
