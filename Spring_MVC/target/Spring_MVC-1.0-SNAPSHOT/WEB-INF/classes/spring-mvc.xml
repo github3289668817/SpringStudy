@@ -37,11 +37,30 @@
         可用在Spring-xml.xml配置文件中使用<mvc:annotation-driven />代替注解处理器和适配器的配置
         同时<mvc:annotation-driven />默认底层就会集成jackson进行对象或集合的json格式字符串的转换
 -->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven conversion-service="ConversionService" />
 
 <!--    在SpringMVC框架中   开放资源的访问-->
 <!--    <mvc:resources mapping="/js/**" location="/js/" />-->
 <!--    <mvc:resources mapping="/img/**" location="/img/" />-->
     <mvc:default-servlet-handler />
+
+<!--    声明自定义类型转换器-->
+    <bean id="ConversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="per.xgt.converter.DateConverter"></bean>
+            </list>
+        </property>
+    </bean>
+
+<!--    配置文件上传的解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+<!--        编码格式-->
+        <property name="defaultEncoding" value="UTF-8"/>
+<!--        上传文件总的大小限制-->
+        <property name="maxUploadSize" value="20480000"/>
+<!--        上传单个文件的大小限制-->
+        <property name="maxUploadSizePerFile" value="2048000"/>
+    </bean>
 
 </beans>
