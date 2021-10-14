@@ -63,4 +63,21 @@
         <property name="maxUploadSizePerFile" value="2048000"/>
     </bean>
 
+<!--    配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+<!--            对哪些资源执行拦截操作-->
+            <mvc:mapping path="/**"/>
+            <bean class="per.xgt.interceptor.Interceptor1" />
+        </mvc:interceptor>
+
+<!--        pre1>pre1>目标方法>post2>post1>after2>after1-->
+<!--        执行顺序被配置顺序影响-->
+        <mvc:interceptor>
+<!--            对哪些资源执行拦截操作-->
+            <mvc:mapping path="/**"/>
+            <bean class="per.xgt.interceptor.Interceptor2" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

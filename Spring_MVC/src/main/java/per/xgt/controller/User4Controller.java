@@ -138,4 +138,13 @@ public class User4Controller {
         return user;
     }
 
+    @RequestMapping("/target")
+    public ModelAndView show(){
+        System.out.println("目标资源执行。。。。。。");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userName","xgt");
+        modelAndView.setViewName("true");
+        return modelAndView;
+    }
+
 }
