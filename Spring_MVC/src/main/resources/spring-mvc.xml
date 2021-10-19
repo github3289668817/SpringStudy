@@ -76,8 +76,25 @@
         <mvc:interceptor>
 <!--            对哪些资源执行拦截操作-->
             <mvc:mapping path="/**"/>
+<!--            配置哪些资源排除拦截操作-->
+            <mvc:exclude-mapping path="/user/quick9"/>
             <bean class="per.xgt.interceptor.Interceptor2" />
         </mvc:interceptor>
     </mvc:interceptors>
+
+<!--    配置异常处理器-->
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+<!--&lt;!&ndash;        默认异常跳转error页面&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="defaultErrorView" value="error" />&ndash;&gt;-->
+<!--        <property name="exceptionMappings">-->
+<!--            <map>-->
+<!--                <entry key="java.lang.ClassCastException" value="error1" />-->
+<!--                <entry key="per.xgt.filter.CharsetEncodingFilter" value="error2" />-->
+<!--            </map>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+<!--    自定义异常处理器-->
+    <bean class="per.xgt.resolver.MyExceptionResolver" />
 
 </beans>
