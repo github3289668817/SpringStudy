@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--目标对象-->
+    <bean id="target" class="per.xgt.aop.Target"></bean>
+    <!--切面对象-->
+    <bean id="myAspect" class="per.xgt.aop.MyAspect"></bean>
+    <!--配置织入:告诉Spring框架哪些方法需要进行哪些增强-->
+    <aop:config>
+        <!--声明切面-->
+        <aop:aspect ref="myAspect">
+            <!--抽取切点表达式-->
+            <aop:pointcut id="point1" expression="execution(* per.xgt.aop.*.*(..))"/>
+            <!--切面：切点+通知-->
+            <!--
+                切点表达式：execution([修饰符] 返回值类型 包名.类名.方法名(参数类型))
+                1.访问修饰符可以省略
+                2.返回值类型 包名 类名 方法名可以使用 * 代替代表任意
+                3.包名与类名之间一个点.代表当前包下的类，两个点..表示当前包及其子包下的类
+                4.参数列表可以使用两个点..表示任意个数，任意类型的参数列表
+            -->
+            <!--按通知类型
+                1.前置通知before：指定增强的方法在切入点方法之前执行
+                2.后置通知after-returning：指定增强的方法在切入点方法之后执行
+                3.环绕通知around：指定增强的方法在切入点方法之前和之后都执行
+                4.异常抛出通知throwing：指定增强的方法在出现异常时执行
+                5.最终通知after：无论增强方式执行是否有异常都会执行
+            -->
+<!--            <aop:before method="before" pointcut="execution(* per.xgt.aop.*.*(..))"></aop:before>-->
+<!--            <aop:after-returning method="afterReturning" pointcut="execution(* per.xgt.aop.*.*(..))"></aop:after-returning>-->
+<!--            <aop:around method="around" pointcut="execution(* per.xgt.aop.*.*(..))"></aop:around>-->
+<!--            <aop:after-throwing method="afterThrowing" pointcut="execution(* per.xgt.aop.*.*(..))"></aop:after-throwing>-->
+<!--            <aop:after method="after" pointcut="execution(* per.xgt.aop.*.*(..))"></aop:after>-->
+            <aop:before method="before" pointcut-ref="point1"></aop:before>
+            <aop:after-returning method="afterReturning" pointcut-ref="point1"></aop:after-returning>
+            <aop:around method="around" pointcut-ref="point1"></aop:around>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="point1"></aop:after-throwing>
+            <aop:after method="after" pointcut-ref="point1"></aop:after>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
