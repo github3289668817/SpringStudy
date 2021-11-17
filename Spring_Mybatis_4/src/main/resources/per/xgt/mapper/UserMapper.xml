@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="per.xgt.mapper.UserMapper">
+
+    <insert id="save" parameterType="user">
+        insert into test_user
+        values (null, #{username}, #{password}, #{birthday})
+    </insert>
+
+    <select id="findById" parameterType="int" resultType="user">
+        select *
+        from test_user
+        where id = #{id}
+    </select>
+
+    <select id="findAll" resultType="user">
+        select *
+        from test_user
+    </select>
+
+</mapper>
