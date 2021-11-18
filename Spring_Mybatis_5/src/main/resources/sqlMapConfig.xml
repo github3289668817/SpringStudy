@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--通过properties标签加载外部properties文件-->
+    <properties resource="jdbc.properties" ></properties>
+
+    <!--定义别名-->
+    <typeAliases>
+        <typeAlias type="per.xgt.domain.User" alias="user"></typeAlias>
+        <typeAlias type="per.xgt.domain.Order" alias="order"></typeAlias>
+    </typeAliases>
+
+    <!--注册类型处理器-->
+    <typeHandlers>
+        <typeHandler handler="per.xgt.handler.DateTypeHandler" ></typeHandler>
+    </typeHandlers>
+
+    <!--数据源环境，支持多环境配置--><!--指定默认的环境名称-->
+    <environments default="develop">
+        <!--可以有多个--><!--指定当前环境名称-->
+        <environment id="develop">
+            <!--事务管理器-->
+            <!--
+                JDBC：直接使用JDBC的提交和回滚设置，依赖于从数据源得到的连接来管理事务的作用域
+                MANAGED：从来不提交和回滚一个连接，而是让容器来管理事务的整个生命周期。默认情况下它会关闭连接，所以需要将closeConnection属性设置为false来阻止它的默认的关闭行为
+            -->
+            <transactionManager type="JDBC"/>
+
+            <!--数据源--><!--指定当前数据源的链接类型-->
+            <!--
+                UNPOOLED：这个数据源的实现知识每次被请求时打开和关闭连接
+                POOLED：利用“池”的概念将JDBC连接对象组织起来
+                JNDI：这个数据源的实现是为了能在如EJB或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置在一个JNDI上下文的引用
+            -->
+            <dataSource type="POOLED">
+                <!--<property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://121.5.179.160:3306/test"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>-->
+                <!--通过properties配置文件加载配置信息-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--加载映射文件-->
+    <!--
+        类路径资源引用
+        <mapper resource="" />
+        完全限定资源定位符url
+        <mapper url="" />
+        接口实现类的完全限定类名
+        <mapper class="" />
+        包内的映射器接口实现全部注册为映射器
+        <package name="" />
+    -->
+    <mappers>
+        <mapper resource="per/xgt/mapper/UserMapper.xml"></mapper>
+        <mapper resource="per/xgt/mapper/OrderMapper.xml"></mapper>
+    </mappers>
+
+
+
+</configuration>
