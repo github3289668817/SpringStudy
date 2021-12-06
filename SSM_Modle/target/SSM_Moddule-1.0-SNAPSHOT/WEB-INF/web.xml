@@ -1,0 +1,62 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+  <!--配置spring的配置文件路径-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+
+  <!--乱码处理过滤器，由springmvc提供，处理post请求乱码-->
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceResponseEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceRequestEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <!--所有请求都设置uft-8的编码-->
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!--配置监听器，可以在应用被不熟的时候创建spring容器-->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!--为DispatcherServlet提供初始化参数的，这是pringmvc配置文件的路径-->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring-servlet.xml</param-value>
+    </init-param>
+    <!--指定项目启动就初始化DispatcherServlet-->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <!--
+      / 表示当前servlet映射除了jsp之外的所有请求，包含静态资源
+      *.do 表示.do结尾的请求路径才能被springMVC处理（老项目会出现）
+      /* 表示当前servlet映射所有请求，包含静态资源,jsp，不应该使用其配置DispatcherServlet
+    -->
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+</web-app>

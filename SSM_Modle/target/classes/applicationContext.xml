@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.alibaba.com/schema/stat"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.alibaba.com/schema/stat http://www.alibaba.com/schema/stat.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+    <!--组件扫描，排除controller，只扫描service和dao层-->
+    <context:component-scan base-package="per.xgt">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--读取properties文件-->
+    <context:property-placeholder location="classpath:jdbc.properties" />
+    <!--数据源 druid连接池-->
+    <!--创建连接池注入容器-->
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!--注解式事务-->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:annotation-driven/>
+
+    <!--spring整合mybatis后控制创建获取SqlSessionFactory的对象-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    </bean>
+    <!--mapper扫描配置，扫描到的mapper对象会被注入Spring容器中-->
+    <mybatis-spring:scan base-package="per.xgt.dao" />
+
+</beans>
